@@ -1,6 +1,6 @@
 ## 项目介绍
-    项目尽可能的保留了自己在Java上的一些编码习惯，
-    如三层结构：model层 service层，controller层. 
+    项目中尽可能的保留了自己在Java上的一些编码习惯，
+    如三层结构：model层 service层，controller层.贴近实际工作开发需要.
     希望可以对目前为Java开发者有需要转向go的朋友提供一个参考.
 
 ## 技术选型
@@ -70,6 +70,7 @@ poem-parent
 * 配置环境
   * 安装 go
   * 环境变量
+  配置GOPATH
   
   | 变量名称=值    |  说明     |
   | --------    | :----:   |
@@ -78,15 +79,17 @@ poem-parent
   | GOSUMDB=sum.golang.google.cn     |包的哈希值校验地址|
   
 * 导入项目到[JetBrains GoLand](https://www.jetbrains.com/go/)
+   启用go mod
+    ![](https://oscimg.oschina.net/oscnet/265bf76794ead3bac4c19a38dc4dbbe8bbb.png "go mod")
 * 下载资源包
     ```
       cd ./poem-api
       go mod tidy
-      cd ./poem-core
+      cd ../poem-core
       go mod tidy
-      cd ./poem-spider
+      cd ../poem-spider
       go mod tidy
-      cd ./poem-web
+      cd ../poem-web
       go mod tidy
     ```
 * 手动创建数据库
@@ -114,10 +117,10 @@ poem-parent
 * 联系作者
 <table>
   <tr>
-    <td>
+    <td>    </td>
     <td><img src="https://oscimg.oschina.net/oscnet/917bee8edddbf16a7645a56d085e887a59f.jpg"/></td> 
     <td><img src="https://oscimg.oschina.net/oscnet/aaf253aa4757b62af61036493f6fba683c2.jpg"/></td> 
-    <td></td>
+    <td>    </td>
   </tr>
 </table>
  
