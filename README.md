@@ -69,17 +69,16 @@ poem-parent
 
 * 配置环境
   * 安装 go
+    * 配置GOPATH
   * 环境变量
-  配置GOPATH
-  
+    
   | 变量名称=值    |  说明     |
   | --------    | :----:   |
   | GO111MODULE=on  |开启go mod模块支持|
   | GOPROXY=https://goproxy.cn,direct     |依赖包下载代理地址|
   | GOSUMDB=sum.golang.google.cn     |包的哈希值校验地址|
   
-* 导入项目到[JetBrains GoLand](https://www.jetbrains.com/go/)
-   启用go mod
+* 导入项目到[JetBrains GoLand](https://www.jetbrains.com/go/)并启用go mod
     ![](https://oscimg.oschina.net/oscnet/265bf76794ead3bac4c19a38dc4dbbe8bbb.png "go mod")
 * 下载资源包
     ```
@@ -97,21 +96,24 @@ poem-parent
   数据库名为: poem 
 * 配置数据库连接
   
-  各模块的conf下的 mysql.ini文件修改配置
+  * 各模块的conf下的 mysql.ini文件修改配置
+    * ./poem-core/conf/mysql.ini
+    * ./poem-spider/conf/mysql.ini
+    * ./poem-web/conf/mysql.ini
 * 同步数据库表
 
-  运行入口: PC000Application.go
+  运行入口: ./poem-core/PC000Application.go
   ```
     注意运行时: working directory需为 ****/poem-parent/poem-core 下
   ```  
   ![](https://oscimg.oschina.net/oscnet/6aeea26d87faf8cc37c7a8de61d29f6c1e5.png "working directory")
 * 执行爬取数据
 
-   运行入口: PS000Application.go
+   运行入口: ./poem-spider/PS000Application.go
    
 * 启动http服务
 
-   运行入口: PW000Application.go
+   运行入口: ./poem-web/PW000Application.go
   ![](https://oscimg.oschina.net/oscnet/b87398056bd5ffc0e7680f748c160bc7608.png "api")
   
 * 联系作者
