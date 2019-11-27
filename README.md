@@ -86,14 +86,10 @@ poem-parent
     ![](https://oscimg.oschina.net/oscnet/265bf76794ead3bac4c19a38dc4dbbe8bbb.png "go mod")
 * 下载资源包
     ```
-      cd ./poem-api
-      go mod tidy
-      cd ../poem-core
-      go mod tidy
-      cd ../poem-spider
-      go mod tidy
-      cd ../poem-web
-      go mod tidy
+      cd ./poem-api && go mod tidy
+      cd ../poem-core && go mod tidy
+      cd ../poem-spider && go mod tidy
+      cd ../poem-web && go mod tidy
     ```
 * 手动创建数据库
   
@@ -122,11 +118,9 @@ poem-parent
   
 * 联系作者
 <table>
-  <tr>
-    <td>    </td>
-    <td><img src="https://oscimg.oschina.net/oscnet/917bee8edddbf16a7645a56d085e887a59f.jpg"/></td> 
-    <td><img src="https://oscimg.oschina.net/oscnet/aaf253aa4757b62af61036493f6fba683c2.jpg"/></td> 
-    <td>    </td>
+  <tr align="center">
+    <td><img height="256" width="256" src="https://oscimg.oschina.net/oscnet/917bee8edddbf16a7645a56d085e887a59f.jpg"/></td> 
+    <td><img height="256" width="256" src="https://oscimg.oschina.net/oscnet/aaf253aa4757b62af61036493f6fba683c2.jpg"/></td> 
   </tr>
 </table>
  
