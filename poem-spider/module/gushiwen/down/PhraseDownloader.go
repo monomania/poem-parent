@@ -53,21 +53,27 @@ func getHeader() http.Header{
 
 func getCookies() []*http.Cookie{
 	cookies := make([]*http.Cookie,5)
-	cookies[0] = new(http.Cookie)
-	cookies[0].Name ="ASP.NET_SessionId"
-	cookies[0].Value ="qveuzvpe5yfwucrf5cjyfxy3"
-	cookies[1] = new(http.Cookie)
-	cookies[1].Name ="Hm_lpvt_04660099568f561a75456483228a9516"
-	cookies[1].Value ="1574556334"
-	cookies[2] = new(http.Cookie)
-	cookies[2].Name ="Hm_lvt_04660099568f561a75456483228a9516"
-	cookies[2].Value ="1573978010,1574343926,1574429250,1574555904"
-	cookies[3] = new(http.Cookie)
-	cookies[3].Name ="Hm_lvt_3c8ecbfa472e76b0340d7a701a04197e"
-	cookies[3].Value ="1573978016,1574429256,1574439784"
-	cookies[4] = new(http.Cookie)
-	cookies[4].Name ="login"
-	cookies[4].Value ="flase"
+	cookie1 := new(http.Cookie)
+	cookie1.Name ="ASP.NET_SessionId"
+	cookie1.Value ="qveuzvpe5yfwucrf5cjyfxy3"
+	cookie2 := new(http.Cookie)
+	cookie2.Name ="Hm_lpvt_04660099568f561a75456483228a9516"
+	cookie2.Value ="1574556334"
+	cookie3 := new(http.Cookie)
+	cookie3.Name ="Hm_lvt_04660099568f561a75456483228a9516"
+	cookie3.Value ="1573978010,1574343926,1574429250,1574555904"
+	cookie4 := new(http.Cookie)
+	cookie4.Name ="Hm_lvt_3c8ecbfa472e76b0340d7a701a04197e"
+	cookie4.Value ="1573978016,1574429256,1574439784"
+	cookie5 := new(http.Cookie)
+	cookie5.Name ="login"
+	cookie5.Value ="flase"
+
+	cookies = append(cookies,cookie1)
+	cookies = append(cookies,cookie2)
+	cookies = append(cookies,cookie3)
+	cookies = append(cookies,cookie4)
+	cookies = append(cookies,cookie5)
 	return cookies
 }
 
