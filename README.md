@@ -119,8 +119,8 @@ poem-parent
 * 联系作者
 <table>
   <tr align="center">
-    <td><img height="256" width="256" src="https://oscimg.oschina.net/oscnet/917bee8edddbf16a7645a56d085e887a59f.jpg"/></td> 
-    <td><img height="256" width="256" src="https://oscimg.oschina.net/oscnet/aaf253aa4757b62af61036493f6fba683c2.jpg"/></td> 
+    <td><img height="256" width="200" src="https://oscimg.oschina.net/oscnet/917bee8edddbf16a7645a56d085e887a59f.jpg"/></td> 
+    <td><img height="256" width="200" src="https://oscimg.oschina.net/oscnet/aaf253aa4757b62af61036493f6fba683c2.jpg"/></td> 
   </tr>
 </table>
  
