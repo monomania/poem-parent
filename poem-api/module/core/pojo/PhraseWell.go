@@ -1,6 +1,6 @@
-package entity
+package pojo
 
-import "tesou.io/platform/poem-parent/poem-api/common/base/entity"
+import "tesou.io/platform/poem-parent/poem-api/common/base/pojo"
 
 /**
  * 名句表
@@ -21,5 +21,5 @@ type PhraseWell struct {
 	Content string `xorm:"varchar(500) comment('名句内容') index unique(OwnId_Content)"`
 
 	//父类
-	entity.Base `xorm:"extends"`
+	pojo.BasePojo `xorm:"extends"`
 }

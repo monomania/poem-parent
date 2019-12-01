@@ -2,8 +2,8 @@ package service
 
 import (
 	"errors"
-	"log"
-	"tesou.io/platform/poem-parent/poem-api/module/core/entity"
+	"tesou.io/platform/poem-parent/poem-api/common/base"
+	"tesou.io/platform/poem-parent/poem-api/module/core/pojo"
 	"tesou.io/platform/poem-parent/poem-core/common/base/service/mysql"
 )
 
@@ -21,11 +21,11 @@ type PoemService struct {
 /**
 sv根据名称查找
  */
-func (this *PoemService) FindByTitle(title string) (*entity.Poem, error) {
-	entitys := make([]*entity.Poem, 0)
+func (this *PoemService) FindByTitle(title string) (*pojo.Poem, error) {
+	entitys := make([]*pojo.Poem, 0)
 	err := mysql.GetEngine().Where(" Title = ?", title).Find(&entitys)
 	if err != nil {
-		log.Println("FindByTitle:", err)
+		base.Log.Info("FindByTitle:", err)
 	}
 	if len(entitys) > 0 {
 		return entitys[0], nil

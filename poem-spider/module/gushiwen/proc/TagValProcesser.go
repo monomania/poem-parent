@@ -5,10 +5,10 @@ import (
 	"github.com/hu17889/go_spider/core/common/page"
 	"github.com/hu17889/go_spider/core/pipeline"
 	"github.com/hu17889/go_spider/core/spider"
-	"log"
+	"tesou.io/platform/poem-parent/poem-api/common/base"
 	"regexp"
 	"strings"
-	"tesou.io/platform/poem-parent/poem-api/module/core/entity"
+	"tesou.io/platform/poem-parent/poem-api/module/core/pojo"
 	"tesou.io/platform/poem-parent/poem-core/common/pinyin"
 	"tesou.io/platform/poem-parent/poem-core/module/core/service"
 )
@@ -34,7 +34,7 @@ func (this *TagProcesser) Startup() {
 func (this *TagProcesser) Process(p *page.Page) {
 	request := p.GetRequest()
 	if !p.IsSucc() {
-		log.Println("URL:,", request.Url, p.Errormsg())
+		base.Log.Info("URL:,", request.Url, p.Errormsg())
 		return
 	}
 
@@ -48,7 +48,7 @@ func (this *TagProcesser) Process(p *page.Page) {
 				sub_type_name = strings.Replace(sub_type_name, "：", "", 1)
 			} else if (i == 1) {
 				selection.Children().Each(func(i int, selection *goquery.Selection) {
-					tagV := new(entity.TagVal)
+					tagV := new(pojo.TagVal)
 					//1.处理标签的url
 					tagUrl, exists := selection.Attr("href")
 					if (exists) {
@@ -86,6 +86,6 @@ func (this *TagProcesser) Process(p *page.Page) {
 }
 
 func (this *TagProcesser) Finish() {
-	log.Println("标签抓取解析完成 \r\n")
+	base.Log.Info("标签抓取解析完成 \r\n")
 
 }

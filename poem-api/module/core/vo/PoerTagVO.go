@@ -1,13 +1,13 @@
 package vo
 
 import (
-	"tesou.io/platform/poem-parent/poem-api/module/core/entity"
+	"tesou.io/platform/poem-parent/poem-api/module/core/pojo"
 )
 
 
 type PoerTagVO struct {
 	//父类
-	entity.PoerTag `xorm:"extends"`
+	pojo.PoerTag `xorm:"extends"`
 	//配置这个Field不进行字段映射
 	SUrl string `xorm:"-"`
 }

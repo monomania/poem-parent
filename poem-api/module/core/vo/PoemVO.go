@@ -2,11 +2,11 @@ package vo
 
 import (
 	"container/list"
-	"tesou.io/platform/poem-parent/poem-api/module/core/entity"
+	"tesou.io/platform/poem-parent/poem-api/module/core/pojo"
 )
 
 type PoemVO struct {
-	entity.Poem `xorm:"extends"`
+	pojo.Poem `xorm:"extends"`
 
 	/**
 	   * 诗文标签列表List<PoemTag>

@@ -1,0 +1,8 @@
+{"level":"info","msg":"foot初始化...","time":"2019-12-01T19:31:00+08:00"}
+{"level":"info","msg":"诗人表抓取解析完成 \r\n","time":"2019-12-01T19:31:29+08:00"}
+{"level":"info","msg":"标签抓取解析完成 \r\n","time":"2019-12-01T19:31:32+08:00"}
+{"level":"info","msg":"标签抓取解析完成 \r\n","time":"2019-12-01T19:31:33+08:00"}
+{"level":"info","msg":"标签抓取解析完成 \r\n","time":"2019-12-01T19:31:33+08:00"}
+{"level":"info","msg":"Save:Error 1406: Data too long for column 'Content' at row 1","time":"2019-12-01T19:31:44+08:00"}
+{"level":"info","msg":"诗文表抓取解析完成 \r\n","time":"2019-12-01T19:31:53+08:00"}
+{"level":"info","msg":"诗句抓取解析完成 \r\n","time":"2019-12-01T19:31:54+08:00"}

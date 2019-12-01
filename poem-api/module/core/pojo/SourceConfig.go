@@ -1,4 +1,4 @@
-package entity
+package pojo
 
 import "tesou.io/platform/poem-parent/poem-api/module/core/enums"
 

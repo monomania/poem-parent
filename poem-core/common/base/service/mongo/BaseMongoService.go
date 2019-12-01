@@ -5,7 +5,7 @@ import (
 	"github.com/astaxie/beego/config"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
-	"log"
+	"tesou.io/platform/poem-parent/poem-api/common/base"
 	"reflect"
 	"time"
 )
@@ -25,12 +25,12 @@ func init() {
 func loadConfig() {
 	configer, e := new(config.IniConfig).Parse("conf/mongo.ini")
 	if e != nil {
-		log.Println("加载配置文件失败:", e.Error())
+		base.Log.Info("加载配置文件失败:", e.Error())
 		return
 	}
 	section, e := configer.GetSection("mongo")
 	if e != nil {
-		log.Println("加载配置文件失败:", e.Error())
+		base.Log.Info("加载配置文件失败:", e.Error())
 		return
 	}
 	mongo_conf = section
@@ -40,7 +40,7 @@ func getSession(hosts string) *mgo.Session {
 	if session == nil {
 		session, err := mgo.Dial(hosts)
 		if err != nil {
-			log.Println("初始化数据库Session失败:", err.Error())
+			base.Log.Info("初始化数据库Session失败:", err.Error())
 		}
 		session.SetMode(mgo.Monotonic, true)
 		return session
@@ -127,7 +127,7 @@ func Save(entity interface{}) string {
 	Exec(entity, func(collection *mgo.Collection) {
 		err := collection.Insert(entity)
 		if err != nil {
-			log.Println("错误:", err)
+			base.Log.Info("错误:", err)
 		}
 	})
 
@@ -146,7 +146,7 @@ func SaveList(entitys []interface{}) *list.List {
 	Exec(entitys[0], func(collection *mgo.Collection) {
 		err := collection.Insert(entitys...)
 		if err != nil {
-			log.Println("错误:", err)
+			base.Log.Info("错误:", err)
 		}
 
 	})
@@ -162,7 +162,7 @@ func FindById(id string, entity interface{}) interface{} {
 	Exec(entity, func(collection *mgo.Collection) {
 		err := collection.FindId(objectId).One(entity)
 		if err != nil {
-			log.Println("错误:", err)
+			base.Log.Info("错误:", err)
 		}
 	})
 
@@ -174,7 +174,7 @@ func FindAll(entity interface{}) interface{} {
 	Exec(entity, func(collection *mgo.Collection) {
 		err := collection.Find(nil).All(&entitys)
 		if err != nil {
-			log.Println("错误:", err)
+			base.Log.Info("错误:", err)
 		}
 	})
 	return entitys
@@ -190,7 +190,7 @@ func Del(entity interface{}) int {
 	Exec(entity, func(collection *mgo.Collection) {
 		err := collection.RemoveId(id)
 		if err != nil {
-			log.Println("错误:", err)
+			base.Log.Info("错误:", err)
 		}
 	})
 	return 1
@@ -205,7 +205,7 @@ func DelList(entitys []interface{}) int {
 		info, err := collection.RemoveAll(entitys)
 		println(info)
 		if err != nil {
-			log.Println("错误:", err)
+			base.Log.Info("错误:", err)
 		}
 	})
 	return 1
@@ -233,7 +233,7 @@ func Modify(entity interface{}) int {
 	Exec(entity, func(collection *mgo.Collection) {
 		err := collection.UpdateId(bson.M{"_id": id.(bson.ObjectId)}, entity)
 		if err != nil {
-			log.Println("错误:", err)
+			base.Log.Info("错误:", err)
 		}
 	})
 	return 1
@@ -255,7 +255,7 @@ func ModifyList(entitys []interface{}) int {
 		info, err := collection.UpdateAll(bson.M{"_id": bson.M{"$in": ids}}, entitys)
 		println(info)
 		if err != nil {
-			log.Println("错误:", err)
+			base.Log.Info("错误:", err)
 		}
 	})
 	return 1

@@ -2,14 +2,14 @@ package proc
 
 import (
 	"github.com/PuerkitoBio/goquery"
-	"log"
+	"tesou.io/platform/poem-parent/poem-api/common/base"
 	"github.com/hu17889/go_spider/core/common/page"
 	"github.com/hu17889/go_spider/core/pipeline"
 	"github.com/hu17889/go_spider/core/spider"
 	"regexp"
 	"strconv"
 	"strings"
-	"tesou.io/platform/poem-parent/poem-api/module/core/entity"
+	"tesou.io/platform/poem-parent/poem-api/module/core/pojo"
 	"tesou.io/platform/poem-parent/poem-core/module/core/service"
 	"tesou.io/platform/poem-parent/poem-spider/module/gushiwen"
 )
@@ -39,21 +39,21 @@ func (this *BookProcesser) Startup() {
 func (this *BookProcesser) Process(p *page.Page) {
 	request := p.GetRequest()
 	if !p.IsSucc() {
-		log.Println("URL:,", request.Url, p.Errormsg())
+		base.Log.Info("URL:,", request.Url, p.Errormsg())
 		return
 	}
 
 	//从url中获取朝代信息
-	book_list_slice := make(map[*entity.Book][]*entity.BookItem, 0)
+	book_list_slice := make(map[*pojo.Book][]*pojo.BookItem, 0)
 	p.GetHtmlParser().Find(" div.main3 div.left").Each(func(i int, selection *goquery.Selection) {
-		book := new(entity.Book)
+		book := new(pojo.Book)
 		book.SUrl = request.Url
 		book.SId = this.url_entity_map[request.Url]
 		/*html, _ := selection.Html()
-		log.Println(html)*/
+		base.Log.Info(html)*/
 		/*if strings.EqualFold(request.Url,"https://so.gushiwen.org/guwen/book_1.aspx"){
 			html, _ := selection.Html()
-			log.Println(html)
+			base.Log.Info(html)
 		}*/
 		selection.Find("div.sonspic div.cont").Children().Each(func(i int, selection *goquery.Selection) {
 			if i == 1 { //名称
@@ -63,9 +63,9 @@ func (this *BookProcesser) Process(p *page.Page) {
 			}
 		})
 
-		bookItems := make([]*entity.BookItem, 0)
+		bookItems := make([]*pojo.BookItem, 0)
 		selection.Find("div.sons div.bookcont * span a").Each(func(i int, selection *goquery.Selection) {
-			item := new(entity.BookItem)
+			item := new(pojo.BookItem)
 			type_elem := selection.Parent().Parent().Siblings()
 			if type_elem.Is("div.bookMl") {
 				item.TypeName = strings.TrimSpace(type_elem.Text())
@@ -114,7 +114,7 @@ func (this *BookProcesser) Process(p *page.Page) {
 }
 
 func (this *BookProcesser) Finish() {
-	log.Println("古文抓取解析完成 \r\n")
-	//log.Println("古文项抓取开始 \r\n")
+	base.Log.Info("古文抓取解析完成 \r\n")
+	//base.Log.Info("古文项抓取开始 \r\n")
 
 }

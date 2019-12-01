@@ -1,7 +1,7 @@
 package vo
 
 import (
-	"tesou.io/platform/poem-parent/poem-api/module/core/entity"
+	"tesou.io/platform/poem-parent/poem-api/module/core/pojo"
 )
 
 /**
@@ -9,7 +9,7 @@ import (
 */
 type BookItemVO struct {
 	//父类
-	entity.BookItem `xorm:"extends"`
+	pojo.BookItem `xorm:"extends"`
 	//配置这个Field不进行字段映射
 	SUrl string `xorm:"-"`
 }

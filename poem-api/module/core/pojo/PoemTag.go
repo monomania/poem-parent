@@ -1,7 +1,7 @@
-package entity
+package pojo
 
 import (
-	"tesou.io/platform/poem-parent/poem-api/common/base/entity"
+	"tesou.io/platform/poem-parent/poem-api/common/base/pojo"
 )
 
 /**
@@ -15,5 +15,5 @@ type PoemTag struct {
 	TagId int64 `xorm:" comment('标签id') index"`
 
 	//父类
-	entity.Base `xorm:"extends"`
+	pojo.BasePojo `xorm:"extends"`
 }

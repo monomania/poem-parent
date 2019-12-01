@@ -3,13 +3,13 @@ package proc
 import (
 	"container/list"
 	"github.com/PuerkitoBio/goquery"
-	"log"
+	"tesou.io/platform/poem-parent/poem-api/common/base"
 	"github.com/hu17889/go_spider/core/common/page"
 	"github.com/hu17889/go_spider/core/pipeline"
 	"github.com/hu17889/go_spider/core/spider"
 	"strconv"
 	"strings"
-	"tesou.io/platform/poem-parent/poem-api/module/core/entity"
+	"tesou.io/platform/poem-parent/poem-api/module/core/pojo"
 	"tesou.io/platform/poem-parent/poem-api/module/core/enums"
 	"tesou.io/platform/poem-parent/poem-core/module/core/service"
 	"tesou.io/platform/poem-parent/poem-spider/module/gushiwen"
@@ -42,15 +42,15 @@ func (this *PoemProcesser) Startup() {
 func (this *PoemProcesser) Process(p *page.Page) {
 	request := p.GetRequest()
 	if !p.IsSucc() {
-		log.Println("URL:,", request.Url, p.Errormsg())
+		base.Log.Info("URL:,", request.Url, p.Errormsg())
 		return
 	}
 
 	//从url中获取朝代信息
-	poem_list_slice := make(map[*entity.Poem]*list.List, 0)
-	poem_list_update_slice := make(map[*entity.Poem]*list.List, 0)
+	poem_list_slice := make(map[*pojo.Poem]*list.List, 0)
+	poem_list_update_slice := make(map[*pojo.Poem]*list.List, 0)
 	p.GetHtmlParser().Find(" div.sons").Each(func(i int, selection *goquery.Selection) {
-		poem := new(entity.Poem)
+		poem := new(pojo.Poem)
 		selection.Find("div.cont").Children().Each(func(i int, selection *goquery.Selection) {
 			//诗文名称
 			if i == 1 {
@@ -68,11 +68,11 @@ func (this *PoemProcesser) Process(p *page.Page) {
 				})
 
 				if len(poerName) > 0 {
-					var poer *entity.Poer
+					var poer *pojo.Poer
 					var err error
 					poer, err = this.poerService.FindByDynastyAndName(level, poerName)
 					if nil != err || poer.Id <= 0 {
-						poer = new(entity.Poer)
+						poer = new(pojo.Poer)
 						poer.Dynasty = level
 						poer.Name = poerName
 						//因这里获取到诗人信息有限，不做更新
@@ -96,7 +96,7 @@ func (this *PoemProcesser) Process(p *page.Page) {
 		selection.Find("div.tag").Children().Each(func(i int, selection *goquery.Selection) {
 			if selection.Is("a") {
 				tagName := strings.TrimSpace(selection.Text())
-				tag := entity.TagVal{}
+				tag := pojo.TagVal{}
 				tag.Name = tagName
 				tag_list_slice.PushBack(tag)
 			}
@@ -117,11 +117,11 @@ func (this *PoemProcesser) Process(p *page.Page) {
 		for k, v := range poem_list_slice {
 			this.poemService.Save(k)
 			for item := v.Front(); nil != item; item = item.Next() {
-				tag := (item.Value).(entity.TagVal)
+				tag := (item.Value).(pojo.TagVal)
 				//标签不作保存,只作查询，以保存关系
 				val, e := this.tagService.FindByName(tag.Name)
 				if e == nil {
-					poemTag := new(entity.PoemTag)
+					poemTag := new(pojo.PoemTag)
 					poemTag.PoemId = k.Id
 					poemTag.TagId = val.Id
 					this.poemTagService.Save(poemTag)
@@ -139,6 +139,6 @@ func (this *PoemProcesser) Process(p *page.Page) {
 }
 
 func (this *PoemProcesser) Finish() {
-	log.Println("诗文表抓取解析完成 \r\n")
+	base.Log.Info("诗文表抓取解析完成 \r\n")
 
 }

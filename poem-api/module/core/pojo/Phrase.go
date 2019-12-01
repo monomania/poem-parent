@@ -1,6 +1,6 @@
-package entity
+package pojo
 
-import "tesou.io/platform/poem-parent/poem-api/common/base/entity"
+import "tesou.io/platform/poem-parent/poem-api/common/base/pojo"
 
 /**
  * 诗句表
@@ -19,5 +19,5 @@ type Phrase struct {
 	//注
 	Zhu string `xorm:"varchar(500) comment('注释')"`
 	//父类
-	entity.Base `xorm:"extends"`
+	pojo.BasePojo `xorm:"extends"`
 }

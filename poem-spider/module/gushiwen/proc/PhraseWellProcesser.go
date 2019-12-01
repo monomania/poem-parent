@@ -2,14 +2,14 @@ package proc
 
 import (
 	"github.com/PuerkitoBio/goquery"
-	"log"
+	"tesou.io/platform/poem-parent/poem-api/common/base"
 	"github.com/hu17889/go_spider/core/common/page"
 	"github.com/hu17889/go_spider/core/pipeline"
 	"github.com/hu17889/go_spider/core/spider"
 	"regexp"
 	"strconv"
 	"strings"
-	"tesou.io/platform/poem-parent/poem-api/module/core/entity"
+	"tesou.io/platform/poem-parent/poem-api/module/core/pojo"
 	"tesou.io/platform/poem-parent/poem-core/module/core/service"
 	"tesou.io/platform/poem-parent/poem-spider/module/gushiwen"
 )
@@ -30,14 +30,14 @@ func GetPhraseWellProcesser() *PhraseWellProcesser {
 
 func (this *PhraseWellProcesser) Startup() {
 	//获取所有的bookItem数据
-	bookList := []entity.BookItem{}
+	bookList := []pojo.BookItem{}
 	this.bookItemService.FindAll(&bookList)
 	this.sId_bookId_map = make(map[string]int64, 0)
 	for _, e := range bookList {
 		this.sId_bookId_map[e.SId] = e.Id
 	}
 	//获取所有的poem数据
-	poemList := []entity.Poem{}
+	poemList := []pojo.Poem{}
 	this.poemService.FindAll(&poemList)
 	this.sId_poemId_map = make(map[string]int64, 0)
 	for _, e := range poemList {
@@ -56,13 +56,13 @@ func (this *PhraseWellProcesser) Startup() {
 func (this *PhraseWellProcesser) Process(p *page.Page) {
 	request := p.GetRequest()
 	if !p.IsSucc() {
-		log.Println("URL:,", request.Url, p.Errormsg())
+		base.Log.Info("URL:,", request.Url, p.Errormsg())
 		return
 	}
 
 	data_list_slice := make([]interface{}, 0)
 	p.GetHtmlParser().Find(" div.sons div.cont").Each(func(i int, selection *goquery.Selection) {
-		data := new(entity.PhraseWell)
+		data := new(pojo.PhraseWell)
 
 		selection.Children().Each(func(i int, selection *goquery.Selection) {
 			if i == 0 {
@@ -98,6 +98,6 @@ func (this *PhraseWellProcesser) Process(p *page.Page) {
 }
 
 func (this *PhraseWellProcesser) Finish() {
-	log.Println("名句表抓取解析完成 \r\n")
+	base.Log.Info("名句表抓取解析完成 \r\n")
 
 }

@@ -2,13 +2,13 @@ package proc
 
 import (
 	"github.com/PuerkitoBio/goquery"
-	"log"
+	"tesou.io/platform/poem-parent/poem-api/common/base"
 	"github.com/hu17889/go_spider/core/common/page"
 	"github.com/hu17889/go_spider/core/pipeline"
 	"github.com/hu17889/go_spider/core/spider"
 	"regexp"
 	"strings"
-	"tesou.io/platform/poem-parent/poem-api/module/core/entity"
+	"tesou.io/platform/poem-parent/poem-api/module/core/pojo"
 	"tesou.io/platform/poem-parent/poem-core/module/core/service"
 	"tesou.io/platform/poem-parent/poem-spider/module/gushiwen"
 	"tesou.io/platform/poem-parent/poem-spider/module/gushiwen/down"
@@ -18,7 +18,7 @@ type PhraseProcesser struct {
 	poemService   service.PoemService
 	phraseService service.PhraseService
 	//sourceid 对应的诗文实体
-	sourceId_poem_map map[string]entity.Poem
+	sourceId_poem_map map[string]pojo.Poem
 }
 
 func GetPhraseProcesser() *PhraseProcesser {
@@ -28,9 +28,9 @@ func GetPhraseProcesser() *PhraseProcesser {
 func (this *PhraseProcesser) Startup() {
 	newSpider := spider.NewSpider(this, "PhraseProcesser")
 
-	var dataList []entity.Poem
+	var dataList []pojo.Poem
 	this.poemService.FindAll(&dataList)
-	this.sourceId_poem_map = make(map[string]entity.Poem, len(dataList))
+	this.sourceId_poem_map = make(map[string]pojo.Poem, len(dataList))
 	for _, data := range dataList {
 		//无法强制转换使用json处理
 		fullUrl := strings.Replace(gushiwen.GSW_PHRASE_URL, "${id}", data.SId, 1)
@@ -46,7 +46,7 @@ func (this *PhraseProcesser) Startup() {
 func (this *PhraseProcesser) Process(p *page.Page) {
 	request := p.GetRequest()
 	if !p.IsSucc() {
-		log.Println("URL:,", request.Url, p.Errormsg())
+		base.Log.Info("URL:,", request.Url, p.Errormsg())
 		return
 	}
 
@@ -63,7 +63,7 @@ func (this *PhraseProcesser) Process(p *page.Page) {
 	//参考资料开始
 	var reference_point bool
 	p.GetHtmlParser().Find("body").Children().Each(func(i int, selection *goquery.Selection) {
-		data := new(entity.Phrase)
+		data := new(pojo.Phrase)
 		data.PoemId = poem.Id
 		if selection.Is("div.hr") { //到了赏析部分
 			shang_point = true
@@ -118,6 +118,6 @@ func trimHtml(src string) string {
 }
 
 func (this *PhraseProcesser) Finish() {
-	log.Println("诗句抓取解析完成 \r\n")
+	base.Log.Info("诗句抓取解析完成 \r\n")
 
 }

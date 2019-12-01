@@ -4,7 +4,7 @@
     项目中尽可能的保留了自己在Java上的一些编码习惯，
     如三层结构：model层 service层，controller层,贴近实际工作开发需要.
     希望可以对目前为Java开发者有需要转向go的朋友提供一个参考.
-    如果该对您有帮助,请给一个star吧.
+    如果该项目对您有帮助,请您给一个star吧.
 
 ## 技术选型
 * [xorm](https://github.com/go-xorm/xorm)
@@ -78,7 +78,6 @@ poem-parent
 
 * 配置环境
   * 安装 go
-    * 配置GOPATH
   * 环境变量
     
   | 变量名称=值    |  说明     |

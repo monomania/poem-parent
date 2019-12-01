@@ -1,3 +1,4 @@
+##由于xorm无法为Text指定长度创建索引,故将创建索引脚本存放于项目中
 ALTER TABLE `poem`.`t_book`
 ADD INDEX `IDX_t_book_Brief` (`Brief`(50) ASC) ;
 

@@ -2,8 +2,8 @@ package service
 
 import (
 	"errors"
-	"log"
-	"tesou.io/platform/poem-parent/poem-api/module/core/entity"
+	"tesou.io/platform/poem-parent/poem-api/common/base"
+	"tesou.io/platform/poem-parent/poem-api/module/core/pojo"
 	"tesou.io/platform/poem-parent/poem-api/module/core/enums"
 	"tesou.io/platform/poem-parent/poem-core/common/base/service/mysql"
 )
@@ -22,11 +22,11 @@ type PoerService struct {
 /**
 根据朝代名称查找
  */
-func (this *PoerService) FindByDynastyAndName(Dynasty enums.DynastyLevel,Name string) (*entity.Poer, error) {
-	entitys := make([]*entity.Poer, 0)
+func (this *PoerService) FindByDynastyAndName(Dynasty enums.DynastyLevel,Name string) (*pojo.Poer, error) {
+	entitys := make([]*pojo.Poer, 0)
 	err := mysql.GetEngine().Where(" Dynasty = ? AND Name = ? ", Dynasty,Name).Find(&entitys)
 	if err != nil {
-		log.Println("FindByDynastyAndName:", err)
+		base.Log.Info("FindByDynastyAndName:", err)
 	}
 	if len(entitys) > 0 {
 		return entitys[0], nil

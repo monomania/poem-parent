@@ -5,11 +5,11 @@ import (
 	"github.com/hu17889/go_spider/core/common/page"
 	"github.com/hu17889/go_spider/core/pipeline"
 	"github.com/hu17889/go_spider/core/spider"
-	"log"
+	"tesou.io/platform/poem-parent/poem-api/common/base"
 	"regexp"
 	"strconv"
 	"strings"
-	"tesou.io/platform/poem-parent/poem-api/module/core/entity"
+	"tesou.io/platform/poem-parent/poem-api/module/core/pojo"
 	"tesou.io/platform/poem-parent/poem-api/module/core/enums"
 	"tesou.io/platform/poem-parent/poem-core/module/core/service"
 	"tesou.io/platform/poem-parent/poem-spider/module/gushiwen"
@@ -40,7 +40,7 @@ func (this *PoerProcesser) Startup() {
 func (this *PoerProcesser) Process(p *page.Page) {
 	request := p.GetRequest()
 	if !p.IsSucc() {
-		log.Println("URL:,", request.Url, p.Errormsg())
+		base.Log.Info("URL:,", request.Url, p.Errormsg())
 		return
 	}
 
@@ -52,7 +52,7 @@ func (this *PoerProcesser) Process(p *page.Page) {
 	poer_list_slice := make([]interface{}, 0)
 	poer_list_update_slice := make([]interface{}, 0)
 	p.GetHtmlParser().Find(" div.sonspic").Each(func(i int, selection *goquery.Selection) {
-		poer := new(entity.Poer)
+		poer := new(pojo.Poer)
 		selection.Find("div.cont").Children().Each(func(i int, selection *goquery.Selection) {
 			if i == 0 { //0.头像图片
 				headUrl, flag := selection.Find("a img").Attr("src")
@@ -66,7 +66,7 @@ func (this *PoerProcesser) Process(p *page.Page) {
 				desc := strings.TrimSpace(selection.Text())
 				poer.Brief = desc
 			} else {
-				log.Println(i, selection.Text())
+				base.Log.Info(i, selection.Text())
 			}
 		})
 		if len(poer.Name) > 0 {
@@ -88,6 +88,6 @@ func (this *PoerProcesser) Process(p *page.Page) {
 }
 
 func (this *PoerProcesser) Finish() {
-	log.Println("诗人表抓取解析完成 \r\n")
+	base.Log.Info("诗人表抓取解析完成 \r\n")
 
 }

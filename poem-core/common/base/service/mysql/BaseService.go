@@ -7,10 +7,10 @@ import (
 	"github.com/go-xorm/core"
 	"github.com/go-xorm/xorm"
 	"gopkg.in/mgo.v2/bson"
-	"log"
 	"reflect"
 	"strconv"
-	"tesou.io/platform/poem-parent/poem-api/common/base/entity"
+	"tesou.io/platform/poem-parent/poem-api/common/base"
+	"tesou.io/platform/poem-parent/poem-api/common/base/pojo"
 )
 
 type BaseService struct {
@@ -36,7 +36,7 @@ func setEngine() *xorm.Engine {
 	var err error
 	engine, err = xorm.NewEngine("mysql", url)
 	if nil != err {
-		log.Println("init" + err.Error())
+		base.Log.Info("init" + err.Error())
 	}
 	engine.ShowExecTime(true)
 	//则会在控制台打印出生成的SQL语句
@@ -73,12 +73,12 @@ func init() {
 func loadConfig() {
 	configer, e := new(config.IniConfig).Parse("conf/mysql.ini")
 	if e != nil {
-		log.Println("loadConfig加载配置文件失败:", e.Error())
+		base.Log.Info("loadConfig加载配置文件失败:", e.Error())
 		return
 	}
 	section, e := configer.GetSection("mysql")
 	if e != nil {
-		log.Println("loadConfig加载配置文件失败:", e.Error())
+		base.Log.Info("loadConfig加载配置文件失败:", e.Error())
 		return
 	}
 	mysql_conf = section
@@ -161,7 +161,7 @@ func beforeSave(entity interface{}) interface{} {
 func (this *BaseService) SaveOrModify(entity interface{}) {
 	b, err := engine.Exist(entity)
 	if nil != err {
-		log.Println("SaveOrModify:" + err.Error())
+		base.Log.Info("SaveOrModify:" + err.Error())
 	}
 	if b {
 		this.Modify(entity)
@@ -173,7 +173,7 @@ func (this *BaseService) Save(entity interface{}) interface{} {
 	id := beforeSave(entity)
 	_, err := engine.InsertOne(entity)
 	if nil != err {
-		log.Println("Save:" + err.Error())
+		base.Log.Info("Save:" + err.Error())
 	}
 	return id
 }
@@ -190,7 +190,7 @@ func (this *BaseService) SaveList(entitys []interface{}) *list.List {
 
 	_, err := engine.Insert(entitys...)
 	if nil != err {
-		log.Println("SaveList:" + err.Error())
+		base.Log.Info("SaveList:" + err.Error())
 	}
 	return list_ids
 }
@@ -199,7 +199,7 @@ func (this *BaseService) Del(entity interface{}) int64 {
 	beforeDelete(entity)
 	i, err := engine.Delete(entity)
 	if err != nil {
-		log.Println("Del:", err)
+		base.Log.Info("Del:", err)
 	}
 	return i
 }
@@ -211,7 +211,7 @@ func (this *BaseService) Modify(entity interface{}) int64 {
 	id_field := entity_value.FieldByName("Id")
 	i, err := engine.Id(id_field.Interface()).Update(entity)
 	if err != nil {
-		log.Println("Modify:", err)
+		base.Log.Info("Modify:", err)
 	}
 	return i
 }
@@ -233,7 +233,7 @@ func (this *BaseService) Exist(entity interface{}) bool {
 	//对象操作
 	exist, err := engine.Exist(entity)
 	if nil != err {
-		log.Println("Exist:" + err.Error())
+		base.Log.Info("Exist:" + err.Error())
 	}
 	return exist
 }
@@ -241,7 +241,7 @@ func (this *BaseService) Exist(entity interface{}) bool {
 func (this *BaseService) FindAll(entity interface{}) {
 	err := engine.Find(entity)
 	if nil != err {
-		log.Println("FindAll: " + err.Error())
+		base.Log.Info("FindAll: " + err.Error())
 	}
 }
 
@@ -252,7 +252,7 @@ func (this *BaseService) Find(entity interface{}, sql string) {
 /**
 分页查询
 */
-func (this *BaseService) Page(v interface{}, page *entity.Page, dataList interface{}) error {
+func (this *BaseService) Page(v interface{}, page *pojo.Page, dataList interface{}) error {
 	tableName := engine.TableName(v)
 	sql := "select t.* from " + tableName + " t where 1=1 "
 
@@ -262,7 +262,7 @@ func (this *BaseService) Page(v interface{}, page *entity.Page, dataList interfa
 /**
 分页查询
 */
-func (this *BaseService) PageSql(sql string, page *entity.Page, dataList interface{}) error {
+func (this *BaseService) PageSql(sql string, page *pojo.Page, dataList interface{}) error {
 	//声明结果变量
 	var err error
 	var counts int64

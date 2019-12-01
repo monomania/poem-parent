@@ -1,7 +1,7 @@
-package entity
+package pojo
 
 import (
-	"tesou.io/platform/poem-parent/poem-api/common/base/entity"
+	"tesou.io/platform/poem-parent/poem-api/common/base/pojo"
 	"tesou.io/platform/poem-parent/poem-api/module/core/enums"
 )
 
@@ -40,5 +40,5 @@ type Poer struct {
 	 HeadImg string
 
 	//父类
-	entity.Base `xorm:"extends"`
+	pojo.BasePojo `xorm:"extends"`
 }

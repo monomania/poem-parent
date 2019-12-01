@@ -2,12 +2,12 @@ package proc
 
 import (
 	"github.com/PuerkitoBio/goquery"
-	"log"
+	"tesou.io/platform/poem-parent/poem-api/common/base"
 	"github.com/hu17889/go_spider/core/common/page"
 	"github.com/hu17889/go_spider/core/pipeline"
 	"github.com/hu17889/go_spider/core/spider"
 	"strings"
-	"tesou.io/platform/poem-parent/poem-api/module/core/entity"
+	"tesou.io/platform/poem-parent/poem-api/module/core/pojo"
 	"tesou.io/platform/poem-parent/poem-core/module/core/service"
 	"unicode/utf8"
 )
@@ -15,7 +15,7 @@ import (
 type BookItemProcesser struct {
 	bookItemService service.BookItemService
 	//访问路径与bookitem的映射关系
-	url_entity_map map[string]entity.BookItem
+	url_entity_map map[string]pojo.BookItem
 }
 
 func GetBookItemProcesser() *BookItemProcesser {
@@ -23,13 +23,13 @@ func GetBookItemProcesser() *BookItemProcesser {
 }
 
 func (this *BookItemProcesser) Startup() {
-	dataList := []entity.BookItem{}
+	dataList := []pojo.BookItem{}
 	this.bookItemService.FindContextEmpty(&dataList)
 
-	this.url_entity_map = make(map[string]entity.BookItem)
+	this.url_entity_map = make(map[string]pojo.BookItem)
 	newSpider := spider.NewSpider(this, "BookItemProcesser")
 	for _, e := range dataList {
-		//bookItem := (e).(entity.BookItem)
+		//bookItem := (e).(pojo.BookItem)
 		this.url_entity_map[e.SUrl] = e
 		newSpider = newSpider.AddUrl(e.SUrl, "html")
 	}
@@ -40,7 +40,7 @@ func (this *BookItemProcesser) Startup() {
 func (this *BookItemProcesser) Process(p *page.Page) {
 	request := p.GetRequest()
 	if !p.IsSucc() {
-		log.Println("URL:,", request.Url, p.Errormsg())
+		base.Log.Info("URL:,", request.Url, p.Errormsg())
 		return
 	}
 
@@ -72,6 +72,6 @@ func FilterEmoji(content string) string {
 }
 
 func (this *BookItemProcesser) Finish() {
-	log.Println("古籍项抓取解析完成 \r\n")
+	base.Log.Info("古籍项抓取解析完成 \r\n")
 
 }

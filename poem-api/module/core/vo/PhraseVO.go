@@ -1,7 +1,7 @@
 package vo
 
 import (
-	"tesou.io/platform/poem-parent/poem-api/module/core/entity"
+	"tesou.io/platform/poem-parent/poem-api/module/core/pojo"
 )
 
 /**
@@ -9,7 +9,7 @@ import (
 */
 type PhraseVO struct {
 	//父类
-	entity.Phrase `xorm:"extends"`
+	pojo.Phrase `xorm:"extends"`
 }
 
 func (this *PhraseVO) TableName() string {

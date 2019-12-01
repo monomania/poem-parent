@@ -2,9 +2,9 @@ package service
 
 import (
 	"errors"
-	"log"
-	entity2 "tesou.io/platform/poem-parent/poem-api/common/base/entity"
-	"tesou.io/platform/poem-parent/poem-api/module/core/entity"
+	"tesou.io/platform/poem-parent/poem-api/common/base"
+	entity2 "tesou.io/platform/poem-parent/poem-api/common/base/pojo"
+	"tesou.io/platform/poem-parent/poem-api/module/core/pojo"
 	"tesou.io/platform/poem-parent/poem-api/module/core/vo"
 	"tesou.io/platform/poem-parent/poem-core/common/base/service/mysql"
 )
@@ -21,11 +21,11 @@ type BookService struct {
 /**
 sv根据名称查找
 */
-func (this *BookService) FindByName(name string) (*entity.Book, error) {
-	entitys := make([]*entity.Book, 0)
+func (this *BookService) FindByName(name string) (*pojo.Book, error) {
+	entitys := make([]*pojo.Book, 0)
 	err := mysql.GetEngine().Where(" name = ?", name).Find(&entitys)
 	if err != nil {
-		log.Println("FindByName:", err)
+		base.Log.Info("FindByName:", err)
 	}
 	if len(entitys) > 0 {
 		return entitys[0], nil

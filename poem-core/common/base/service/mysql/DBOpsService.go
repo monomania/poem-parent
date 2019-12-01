@@ -2,8 +2,8 @@ package mysql
 
 import (
 	"encoding/json"
-	"log"
-	"tesou.io/platform/poem-parent/poem-api/module/core/entity"
+	"tesou.io/platform/poem-parent/poem-api/common/base"
+	"tesou.io/platform/poem-parent/poem-api/module/core/pojo"
 )
 
 type DBOpsService struct {
@@ -17,7 +17,7 @@ func (this *DBOpsService) TruncateTable(tables []string) {
 	for _, v := range tables {
 		_, err := engine.Exec(" TRUNCATE TABLE " + v)
 		if nil != err {
-			log.Println(err)
+			base.Log.Error(err)
 		}
 	}
 }
@@ -29,7 +29,7 @@ func (this *DBOpsService) DBMetas() string {
 	engine := GetEngine()
 	dbMetas, err := engine.DBMetas()
 	if nil != err {
-		log.Println(err.Error())
+		base.Log.Error(err.Error())
 	}
 	bytes, _ := json.Marshal(dbMetas)
 	result := string(bytes)
@@ -43,8 +43,8 @@ func (this *DBOpsService) SyncTableStruct() {
 	engine := GetEngine()
 	var err error
 	//sync core model
-	err = engine.Sync2(new(entity.Book),new(entity.BookItem), new(entity.Phrase), new(entity.PhraseWell), new(entity.Poem), new(entity.PoemTag), new(entity.Poer), new(entity.PoerTag), new(entity.TagVal))
+	err = engine.Sync2(new(pojo.Book),new(pojo.BookItem), new(pojo.Phrase), new(pojo.PhraseWell), new(pojo.Poem), new(pojo.PoemTag), new(pojo.Poer), new(pojo.PoerTag), new(pojo.TagVal))
 	if nil != err {
-		log.Println(err.Error())
+		base.Log.Error(err.Error())
 	}
 }

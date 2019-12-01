@@ -2,8 +2,8 @@ package service
 
 import (
 	"errors"
-	"log"
-	"tesou.io/platform/poem-parent/poem-api/module/core/entity"
+	"tesou.io/platform/poem-parent/poem-api/common/base"
+	"tesou.io/platform/poem-parent/poem-api/module/core/pojo"
 	"tesou.io/platform/poem-parent/poem-core/common/base/service/mysql"
 )
 
@@ -14,11 +14,11 @@ type TagValService struct {
 /**
 sv根据名称查找
  */
-func (this *TagValService) FindByName(name string) (*entity.TagVal, error) {
-	entitys := make([]*entity.TagVal, 0)
+func (this *TagValService) FindByName(name string) (*pojo.TagVal, error) {
+	entitys := make([]*pojo.TagVal, 0)
 	err := mysql.GetEngine().Where(" Name = ?", name).Find(&entitys)
 	if err != nil {
-		log.Println("FindByName:", err)
+		base.Log.Info("FindByName:", err)
 	}
 	if len(entitys) > 0 {
 		return entitys[0], nil
