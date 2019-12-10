@@ -4,30 +4,30 @@ import (
 	"tesou.io/platform/poem-parent/poem-api/common/base/pojo"
 	"tesou.io/platform/poem-parent/poem-api/module/core/vo"
 	"tesou.io/platform/poem-parent/poem-core/module/core/service"
-	"tesou.io/platform/poem-parent/poem-web/common/base/controller"
+	"tesou.io/platform/poem-parent/poem-core/common/base/controller"
 )
 
 /**
- * 诗人与标签关系表
+ * 诗文
+ *
  * @author fog
- * @date 2019/10/14
+ * @email szy.foggy@gmail.com
  */
-type PoerTagController struct {
+type PoemController struct {
 	controller.BaseController
-	service.PoerTagService
+	service.PoemService
 }
-
 
 /**
 分页查询
 */
-func (this *PoerTagController) Page() {
-	data := &vo.PoerTagVO{}
+func (this *PoemController) Page() {
+	data := &vo.PoemVO{}
 	page := this.GetPage()
 
 	//仍需处理
-	dataList := make([]vo.PoerTagVO, 0)
-	err := this.PoerTagService.Page(data, page, &dataList)
+	dataList := make([]vo.PoemVO, 0)
+	err := this.PoemService.Page(data, page, &dataList)
 	resp := new(pojo.Response)
 	if nil != err {
 		resp.RetCode = -1

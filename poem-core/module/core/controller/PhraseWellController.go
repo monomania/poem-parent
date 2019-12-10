@@ -4,25 +4,29 @@ import (
 	"tesou.io/platform/poem-parent/poem-api/common/base/pojo"
 	"tesou.io/platform/poem-parent/poem-api/module/core/vo"
 	"tesou.io/platform/poem-parent/poem-core/module/core/service"
-	"tesou.io/platform/poem-parent/poem-web/common/base/controller"
+	"tesou.io/platform/poem-parent/poem-core/common/base/controller"
 )
 
-type TagValController struct {
+/**
+ * 名句
+ * @author fog
+ * @email szy.foggy@gmail.com
+ */
+type PhraseWellController struct {
 	controller.BaseController
-	service.TagValService
+	service.PhraseWellService
 }
-
 
 /**
 分页查询
 */
-func (this *TagValController) Page() {
-	data := &vo.TagValVO{}
+func (this *PhraseWellController) Page() {
+	data := &vo.PhraseWellVO{}
 	page := this.GetPage()
 
 	//仍需处理
-	dataList := make([]vo.TagValVO, 0)
-	err := this.TagValService.Page(data, page, &dataList)
+	dataList := make([]vo.PhraseWellVO, 0)
+	err := this.PhraseWellService.Page(data, page, &dataList)
 	resp := new(pojo.Response)
 	if nil != err {
 		resp.RetCode = -1
