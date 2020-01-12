@@ -28,6 +28,13 @@ func GetEngine() *xorm.Engine {
 	return engine
 }
 
+func ShowSQL(show bool) {
+	engine := GetEngine()
+	engine.ShowSQL(show)
+	engine.ShowExecTime(show)
+
+}
+
 func setEngine() *xorm.Engine {
 	url := mysql_conf["url"]
 	maxIdle, _ := strconv.Atoi(mysql_conf["maxIdle"])
@@ -36,12 +43,13 @@ func setEngine() *xorm.Engine {
 	var err error
 	engine, err = xorm.NewEngine("mysql", url)
 	if nil != err {
-		base.Log.Info("init" + err.Error())
+		base.Log.Error("init" + err.Error())
 	}
-	engine.ShowExecTime(true)
+
+	//engine.ShowExecTime(true)
 	//则会在控制台打印出生成的SQL语句
 	//则会在控制台打印调试及以上的信息
-	engine.ShowSQL(true)
+	//engine.ShowSQL(true)
 	//engine.Logger().SetLevel(core.LOG_DEBUG)
 	engine.SetMaxIdleConns(maxIdle)
 	engine.SetMaxOpenConns(maxConn)
@@ -209,7 +217,7 @@ func (this *BaseService) Modify(entity interface{}) int64 {
 
 	entity_value := reflect.ValueOf(entity).Elem()
 	id_field := entity_value.FieldByName("Id")
-	i, err := engine.Id(id_field.Interface()).Update(entity)
+	i, err := engine.Id(id_field.Interface()).AllCols().Update(entity)
 	if err != nil {
 		base.Log.Info("Modify:", err)
 	}
@@ -238,15 +246,19 @@ func (this *BaseService) Exist(entity interface{}) bool {
 	return exist
 }
 
+func (this *BaseService) Find(entity interface{}) {
+	engine.Find(entity)
+}
+
+func (this *BaseService) FindBySQL(sql string, entity interface{}) {
+	engine.SQL(sql).Find(entity)
+}
+
 func (this *BaseService) FindAll(entity interface{}) {
 	err := engine.Find(entity)
 	if nil != err {
 		base.Log.Info("FindAll: " + err.Error())
 	}
-}
-
-func (this *BaseService) Find(entity interface{}, sql string) {
-	engine.SQL(sql).Find(entity)
 }
 
 /**

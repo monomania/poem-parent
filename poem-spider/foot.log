@@ -6,3 +6,5 @@
 {"level":"info","msg":"Save:Error 1406: Data too long for column 'Content' at row 1","time":"2019-12-01T19:31:44+08:00"}
 {"level":"info","msg":"诗文表抓取解析完成 \r\n","time":"2019-12-01T19:31:53+08:00"}
 {"level":"info","msg":"诗句抓取解析完成 \r\n","time":"2019-12-01T19:31:54+08:00"}
+{"level":"info","msg":"SaveList:Error 1062: Duplicate entry '16--郁' for key 'UQE_t_book_item_BookId_TypeName_Name'","time":"2019-12-01T19:32:23+08:00"}
+{"level":"info","msg":"SaveList:Error 1062: Duplicate entry '40-传-严朱吾丘主父徐严终王' for key 'UQE_t_book_item_BookId_TypeName_Name'","time":"2019-12-01T19:32:38+08:00"}
