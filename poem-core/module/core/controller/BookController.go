@@ -4,7 +4,7 @@ import (
 	"tesou.io/platform/poem-parent/poem-api/common/base/pojo"
 	"tesou.io/platform/poem-parent/poem-api/module/core/vo"
 	"tesou.io/platform/poem-parent/poem-core/module/core/service"
-	"tesou.io/platform/poem-parent/poem-web/common/base/controller"
+	"tesou.io/platform/poem-parent/poem-core/common/base/controller"
 )
 
 /**

@@ -3,8 +3,8 @@ package main
 import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
-	_ "tesou.io/platform/poem-parent/poem-web/common/fliters"
-	_ "tesou.io/platform/poem-parent/poem-web/common/routers"
+	_ "tesou.io/platform/poem-parent/poem-core/common/fliters"
+	_ "tesou.io/platform/poem-parent/poem-core/common/routers"
 )
 
 func main() {
